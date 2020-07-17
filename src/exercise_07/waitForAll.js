@@ -2,7 +2,7 @@ export default function waitForAll(...promises) {
   // This function returns a promise which will be triggered when all the `promises` are completed.
   //
   // If all the `promises` are resolved, then the returned promise will be resolved. Otherwise,
-  // if one of the `promises` is rejected, then the returned promise will be rejected.
+  //
   //
   // Your target:
   //
@@ -13,6 +13,29 @@ export default function waitForAll(...promises) {
       throw new Error("Not all elements are promises.");
     }
   });
-  
-  return Promise.all(promises.map((p) => p.catch((e) => e)));
+  return new Promise((resolve, reject) => {
+    let flag = true;
+    let result = () => {
+      if (flag) {
+        resolve();
+      } else {
+        reject();
+      }
+    };
+    promises.forEach((cur, index) => {
+      cur.then(
+        () => {
+          if (index === promises.length - 1) {
+            result();
+          }
+        },
+        () => {
+          flag = false;
+          if (index === promises.length - 1) {
+            result();
+          }
+        }
+      );
+    });
+  });
 }
