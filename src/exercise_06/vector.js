@@ -13,4 +13,38 @@ export default class Vector {
   // class.
 
   // PLEASE DELETE THIS LINE AND ADD YOUR IMPLEMENTATION HERE
+  constructor(x, y) {
+    this._x = x;
+    this._y = y;
+  }
+
+  set x(v) {
+    throw new Error();
+  }
+
+  set y(v) {
+    throw new Error();
+  }
+
+  get x() {
+    return this._x;
+  }
+  get y() {
+    return this._y;
+  }
+  distance() {
+    return Math.sqrt(this._x ** 2 + this._y ** 2);
+  }
+  static plus(v1, v2) {
+    return {
+      x: v1.x + v2.x,
+      y: v1.y + v2.y,
+    };
+  }
+  static minux(v1, v2) {
+    return {
+      x: v1.x - v2.x,
+      y: v1.y - v2.y,
+    };
+  }
 }
